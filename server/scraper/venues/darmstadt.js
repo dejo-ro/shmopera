@@ -39,7 +39,7 @@ let handleResponse = (responseString, resolve) => {
         date: date,
         title: title
       }
-    )
+    );
 
   })
 
@@ -52,12 +52,7 @@ exports.load = new Promise((resolve, reject) => {
     host: 'www.staatstheater-darmstadt.de',
     path: '/spielplan-tickets/spielplan/alles.html?no_cache=1&tx_sfspielplan_pi2[channel]=1&tx_sfspielplan_pi2[month]=&tx_sfspielplan_pi2[aenderungen]=&tx_sfspielplan_pi2[premiere]=&tx_sfspielplan_pi2[archiv]=0&tx_sfspielplan_pi2[pageid]=',
     port: '443',
-    method: 'GET',
-    // Have to set correct content type here!
-    // headers: {
-    //     "Content-Type": "application/x-www-form-urlencoded",
-    //     "Content-Length": 11
-    // }
+    method: 'GET'
   };
 
   callback = function(response) {

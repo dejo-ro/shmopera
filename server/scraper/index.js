@@ -3,9 +3,9 @@ const _ = require('lodash');
 // var exports = {};
 
 
-// let venues = ['darmstadt', 'heidelberg'];
+// let venues = ['darmstadt', 'heidelberg', 'mannheim'];
 
-let venues = ['darmstadt']
+let venues = ['mannheim'];
 
 let venueData = {};  //
 

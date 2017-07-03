@@ -4,7 +4,7 @@ var app = express()
 
 const scraper = require('./server/scraper');
 
-scraper.venueData.darmstadt.loader.load.then((res) => {
+scraper.venueData.mannheim.loader.load.then((res) => {
   console.log('res');
   console.log(res);
 });
