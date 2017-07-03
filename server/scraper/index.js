@@ -3,9 +3,11 @@ const _ = require('lodash');
 // var exports = {};
 
 
-let venues = ['darmstadt', 'heidelberg'];
+// let venues = ['darmstadt', 'heidelberg'];
 
-let venueData = {};
+let venues = ['darmstadt']
+
+let venueData = {};  //
 
 _.forEach(venues, (v) => {
   venueData[v] = {

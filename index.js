@@ -4,7 +4,8 @@ var app = express()
 
 const scraper = require('./server/scraper');
 
-scraper.venueData.heidelberg.loader.load.then((res) => {
+scraper.venueData.darmstadt.loader.load.then((res) => {
+  console.log('res');
   console.log(res);
 });
 
@@ -12,7 +13,7 @@ scraper.venueData.heidelberg.loader.load.then((res) => {
 app.get('*', function(req, res) {
   // scraper.listVenues();
 
-  scraper.venueData.heidelberg.loader.run();
+  // scraper.venueData.heidelberg.loader.run();
 
 // console.log(scraper.venueData);
 
