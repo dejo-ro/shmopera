@@ -9,16 +9,11 @@ let handleResponse = (responseString, resolve) => {
   let parsed = cheerio.load(responseString);
 
   parsed('.filter-wrapper').each((index, el) => {
-    // console.log(parsed(el).find('.row').attr('data-date'));
     rawDate = parsed(el).find('.row').attr('data-date');
     let date = rawDate.substring(0,4) + '-' + rawDate.substring(4,6) + '-' + rawDate.substring(6,8);
 
-    // TODO: get title, almost done!
-    let title = 'foo';
+    let title = parsed(el).find('span a').text();
 
-    // console.log(date);
-
-    // console.log(parsed('.row').attr('data-date'));
     res.push(
       {
         venue: 'mannheim',
@@ -28,37 +23,7 @@ let handleResponse = (responseString, resolve) => {
     );
   });
 
-
-
-
-  // console.log(res);
-
-  // Each el is one performance
-  // parsed('.container-central').find('.container-central-spielplan-events').each((index, el) => {
-  //   let date;
-  //   let title;
-  //
-  //   // Ugly stuff.
-  //   messyDateString = parsed(el).find('.container-central-spielplan-events-datum').text();
-  //   dayNumber = parsed(el).find('.container-central-spielplan-events-datum').find('h2').text()
-  //
-  //   messyMonthName = _.trimStart(messyDateString, dayNumber);
-  //   monthName = messyMonthName.substring(2, messyMonthName.length);
-  //
-  //   date = new Date().getFullYear() + '-' + MONTHAME_TO_NUMBER[monthName] + '-' + dayNumber;
-  //
-  //   title = parsed(el).find('.container-central-spielplan-events-right h2').text();
-  //
-  //   res.push({
-  //     venue: 'heidelberg',
-  //     date: date,
-  //     title: title
-  //   });
-  // });
-
   return res;
-
-  // return res;
 };
 
 exports.load = new Promise((resolve, reject) => {
