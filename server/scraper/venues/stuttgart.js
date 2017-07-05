@@ -30,7 +30,6 @@ exports.load = new Promise((resolve, reject) => {
   console.log('Calling stuttgart');
   let options = {
     host: 'www.staatstheater-stuttgart.de',
-    // kat is category. Not sure how the spielplan_content parameter works, is this how they do it in php?!
     path: '/spielplan/filter/oper/',
     port: '443',
     method: 'GET'
