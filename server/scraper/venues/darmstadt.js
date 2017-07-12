@@ -3,7 +3,7 @@ const https = require('https');
 const cheerio = require('cheerio');
 const _ = require('lodash');
 
-const MONTHAME_TO_NUMBER = {
+const MONTHNAME_TO_NUMBER = {
   'Januar': 1,
   'Februar': 2,
   'März': 3,
@@ -31,7 +31,7 @@ let handleResponse = (responseString, resolve) => {
 
     let title = parsed(el).find('h4').text();
 
-    let date = new Date().getFullYear() + '-' + MONTHAME_TO_NUMBER[monthName] + '-' + dayNumber;
+    let date = new Date().getFullYear() + '-' + MONTHNAME_TO_NUMBER[monthName] + '-' + dayNumber;
 
     res.push(
       {

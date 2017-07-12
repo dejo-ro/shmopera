@@ -2,7 +2,7 @@ const http = require('http');
 const cheerio = require('cheerio');
 const _ = require('lodash');
 
-const MONTHAME_TO_NUMBER = {
+const MONTHNAME_TO_NUMBER = {
   'Januar': 1,
   'Februar': 2,
   'März': 3,
@@ -35,7 +35,7 @@ let handleResponse = (responseString, resolve) => {
     messyMonthName = _.trimStart(messyDateString, dayNumber);
     monthName = messyMonthName.substring(2, messyMonthName.length);
 
-    date = new Date().getFullYear() + '-' + MONTHAME_TO_NUMBER[monthName] + '-' + dayNumber;
+    date = new Date().getFullYear() + '-' + MONTHNAME_TO_NUMBER[monthName] + '-' + dayNumber;
 
     title = parsed(el).find('.container-central-spielplan-events-right h2').text();
 

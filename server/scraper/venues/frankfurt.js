@@ -3,6 +3,7 @@ const cheerio = require('cheerio');
 const _ = require('lodash');
 
 // This part is highly individualized for the respective venues
+// TODO: this isn't customized for frankfurt yet, still placeholder!!
 let handleResponse = (responseString, resolve) => {
   let res = [];
 
