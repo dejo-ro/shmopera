@@ -5,7 +5,7 @@ const _ = require('lodash');
 
 // let venues = ['darmstadt', 'heidelberg', 'mannheim', 'stuttgart', 'karlsruhe', 'frankfurt'];
 
-let venues = ['karlsruhe'];
+let venues = ['frankfurt'];
 
 let venueData = {};  //
 

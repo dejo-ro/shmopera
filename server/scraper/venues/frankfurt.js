@@ -9,15 +9,21 @@ let handleResponse = (responseString, resolve) => {
 
   let parsed = cheerio.load(responseString);
 
-  parsed('.tag').each((index, el) => {
-    let rawDate = parsed(el).find('.datum').attr('id');
-    let date = rawDate.split('_').join('-');
 
-    let title = parsed(el).find('.nn').text();
+  let year = new Date().getFullYear();
+
+  let month = _.padStart((1 + new Date().getMonth()), 2, '0');
+
+  parsed('.main-innen.col-sm-12').find('.repertoire-element.clearfix').each((index, el) => {
+    let rawDate = parsed(el).find('.col-date').text();
+
+    let date = year + '-' + month + '-' + rawDate.substring(2,4);
+
+    let title = parsed(el).find('h3').text();
 
     res.push(
       {
-        venue: 'stuttgart',
+        venue: 'frankfurt',
         date: date,
         title: title
       }
@@ -29,9 +35,16 @@ let handleResponse = (responseString, resolve) => {
 
 exports.load = new Promise((resolve, reject) => {
   console.log('Calling frankfurt');
+
+  let year = new Date().getFullYear();
+
+  let month = 1 + new Date().getMonth();
+
+  console.log('month', _.padStart(month, 2, '0'));
+
   let options = {
     host: 'www.oper-frankfurt.de',
-    path: '/de/spielplan/',
+    path: '/de/spielplan/?datum=' + year + '-' + _.padStart(month, 2, '0') + '&lang=100',
     port: '80',
     method: 'GET'
   };
