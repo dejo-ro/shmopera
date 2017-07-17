@@ -26,28 +26,31 @@ let handleResponse = (responseString, resolve) => {
   return res;
 };
 
-exports.load = new Promise((resolve, reject) => {
-  console.log('Calling stuttgart');
-  let options = {
-    host: 'www.staatstheater-stuttgart.de',
-    path: '/spielplan/filter/oper/',
-    port: '443',
-    method: 'GET'
-  };
+exports.load = () => {
 
-  callback = function(response) {
-    var str = ''
-    response.on('data', function (chunk) {
-      str += chunk;
-    });
+  exports.load = new Promise((resolve, reject) => {
+    console.log('Calling stuttgart');
+    let options = {
+      host: 'www.staatstheater-stuttgart.de',
+      path: '/spielplan/filter/oper/',
+      port: '443',
+      method: 'GET'
+    };
 
-    response.on('end', function () {
-      console.log('Received stuttgart');
-      let handled = handleResponse(str);
+    callback = function(response) {
+      var str = ''
+      response.on('data', function (chunk) {
+        str += chunk;
+      });
 
-      resolve(handled);
-    });
-  }
+      response.on('end', function () {
+        console.log('Received stuttgart');
+        let handled = handleResponse(str);
+        
+        resolve(handled);
+      });
+    }
 
-  let req = https.request(options, callback).end();
-});
+    let req = https.request(options, callback).end();
+  });
+}

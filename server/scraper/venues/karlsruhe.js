@@ -50,33 +50,34 @@ let handleResponse = (responseString, resolve) => {
   return res;
 };
 
-exports.load = new Promise((resolve, reject) => {
-  console.log('Calling karlsruhe');
+exports.load = () => {
 
-  let currentMonth = new Date().getMonth()
+  return new Promise((resolve, reject) => {
+    console.log('Calling karlsruhe');
 
-  let options = {
-    host: 'www.staatstheater.karlsruhe.de',
-    path: '/spielplan/' + MONTHNUMBER_TO_NAME[currentMonth] + '/?filter=100',
-    port: '80',
-    method: 'GET'
-  };
+    let currentMonth = new Date().getMonth()
 
-console.log('/spielplan/' + MONTHNUMBER_TO_NAME[currentMonth] + '/?filter=100');
+    let options = {
+      host: 'www.staatstheater.karlsruhe.de',
+      path: '/spielplan/' + MONTHNUMBER_TO_NAME[currentMonth] + '/?filter=100',
+      port: '80',
+      method: 'GET'
+    };
 
-  callback = function(response) {
-    var str = ''
-    response.on('data', function (chunk) {
-      str += chunk;
-    });
+    callback = function(response) {
+      var str = ''
+      response.on('data', function (chunk) {
+        str += chunk;
+      });
 
-    response.on('end', function () {
-      console.log('Received karlsruhe');
-      let handled = handleResponse(str);
+      response.on('end', function () {
+        console.log('Received karlsruhe');
+        let handled = handleResponse(str);
 
-      resolve(handled);
-    });
-  }
+        resolve(handled);
+      });
+    }
 
-  let req = http.request(options, callback).end();
-});
+    let req = http.request(options, callback).end();
+  });
+}

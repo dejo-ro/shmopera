@@ -49,40 +49,42 @@ let handleResponse = (responseString, resolve) => {
   return res;
 };
 
-// Heidelberg has dynamic page filling; reloads data when scroll reaches bottom, bleh..
-// This is not accounted for here.
-// TODO: account for this!
-exports.load = new Promise((resolve, reject) => {
-  console.log('Calling heidelberg');
-  var options = {
-    host: 'www.theaterheidelberg.de',
-    path: '/spielplan/?filter=filter_sparte',
-    port: '80',
-    method: 'POST',
-    // Have to set correct content type here!
-    headers: {
+exports.load = () => {
+  // Heidelberg has dynamic page filling; reloads data when scroll reaches bottom, bleh..
+  // This is not accounted for here.
+  // TODO: account for this!
+  return new Promise((resolve, reject) => {
+    console.log('Calling heidelberg');
+    var options = {
+      host: 'www.theaterheidelberg.de',
+      path: '/spielplan/?filter=filter_sparte',
+      port: '80',
+      method: 'POST',
+      // Have to set correct content type here!
+      headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "Content-Length": 11
+      }
+    };
+
+    callback = function(response) {
+      var str = ''
+      response.on('data', function (chunk) {
+        str += chunk;
+      });
+
+      response.on('end', function () {
+        console.log('Received heidelberg');
+        // Resolve only with the final product
+        let handled = handleResponse(str);
+
+        resolve(handled);
+      });
     }
-  };
 
-  callback = function(response) {
-    var str = ''
-    response.on('data', function (chunk) {
-      str += chunk;
-    });
-
-    response.on('end', function () {
-      console.log('Received heidelberg');
-      // Resolve only with the final product
-      let handled = handleResponse(str);
-
-      resolve(handled);
-    });
-  }
-
-  var req = http.request(options, callback);
-  // This is the data we are posting. It represents Sparte = 'Musiktheater'
-  req.write("Filter=1267");
-  req.end();
-});
+    var req = http.request(options, callback);
+    // This is the data we are posting. It represents Sparte = 'Musiktheater'
+    req.write("Filter=1267");
+    req.end();
+  });
+}

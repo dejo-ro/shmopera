@@ -4,10 +4,10 @@ var app = express()
 
 const scraper = require('./server/scraper');
 
-scraper.venueData.frankfurt.loader.load.then((res) => {
-  console.log('res');
-  console.log(res);
-});
+// scraper.venueData.frankfurt.loader.load.then((res) => {
+//   console.log('res');
+//   console.log(res);
+// });
 
 
 app.get('*', function(req, res) {

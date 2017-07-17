@@ -33,35 +33,36 @@ let handleResponse = (responseString, resolve) => {
   return res;
 };
 
-exports.load = new Promise((resolve, reject) => {
-  console.log('Calling frankfurt');
+exports.load = () => {
 
-  let year = new Date().getFullYear();
+  return new Promise((resolve, reject) => {
+    console.log('Calling frankfurt');
 
-  let month = 1 + new Date().getMonth();
+    let year = new Date().getFullYear();
 
-  console.log('month', _.padStart(month, 2, '0'));
+    let month = 1 + new Date().getMonth();
 
-  let options = {
-    host: 'www.oper-frankfurt.de',
-    path: '/de/spielplan/?datum=' + year + '-' + _.padStart(month, 2, '0') + '&lang=100',
-    port: '80',
-    method: 'GET'
-  };
+    let options = {
+      host: 'www.oper-frankfurt.de',
+      path: '/de/spielplan/?datum=' + year + '-' + _.padStart(month, 2, '0') + '&lang=100',
+      port: '80',
+      method: 'GET'
+    };
 
-  callback = function(response) {
-    var str = ''
-    response.on('data', function (chunk) {
-      str += chunk;
-    });
+    callback = function(response) {
+      var str = ''
+      response.on('data', function (chunk) {
+        str += chunk;
+      });
 
-    response.on('end', function () {
-      console.log('Received frankfurt');
-      let handled = handleResponse(str);
+      response.on('end', function () {
+        console.log('Received frankfurt');
+        let handled = handleResponse(str);
 
-      resolve(handled);
-    });
-  }
+        resolve(handled);
+      });
+    }
 
-  let req = http.request(options, callback).end();
-});
+    let req = http.request(options, callback).end();
+  });
+}

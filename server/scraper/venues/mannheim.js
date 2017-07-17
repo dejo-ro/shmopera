@@ -26,31 +26,36 @@ let handleResponse = (responseString, resolve) => {
   return res;
 };
 
-exports.load = new Promise((resolve, reject) => {
-  let currentYear = new Date().getFullYear();
-  let currentMonth = 1 + new Date().getMonth();
+exports.load = () => {
 
-  let options = {
-    host: 'www.nationaltheater-mannheim.de',
-    // kat is category. Not sure how the spielplan_content parameter works, is this how they do it in php?!
-    path: '/de/spielplan_ajax.php?kat_filter=1&mes=' + currentMonth + '&ano=' + currentYear + '&spielplan_content',
-    port: '80',
-    method: 'GET'
-  };
+  return new Promise((resolve, reject) => {
+    console.log('Calling mannheim');
 
-  callback = function(response) {
-    var str = ''
-    response.on('data', function (chunk) {
-      str += chunk;
-    });
+    let currentYear = new Date().getFullYear();
+    let currentMonth = 1 + new Date().getMonth();
 
-    response.on('end', function () {
-      console.log('Received mannheim');
-      let handled = handleResponse(str);
+    let options = {
+      host: 'www.nationaltheater-mannheim.de',
+      // kat is category. Not sure how the spielplan_content parameter works, is this how they do it in php?!
+      path: '/de/spielplan_ajax.php?kat_filter=1&mes=' + currentMonth + '&ano=' + currentYear + '&spielplan_content',
+      port: '80',
+      method: 'GET'
+    };
+    
+    callback = function(response) {
+      var str = ''
+      response.on('data', function (chunk) {
+        str += chunk;
+      });
 
-      resolve(handled);
-    });
-  }
+      response.on('end', function () {
+        console.log('Received mannheim');
+        let handled = handleResponse(str);
 
-  let req = http.request(options, callback).end();
-});
+        resolve(handled);
+      });
+    }
+
+    let req = http.request(options, callback).end();
+  });
+}

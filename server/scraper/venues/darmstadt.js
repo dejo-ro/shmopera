@@ -46,28 +46,31 @@ let handleResponse = (responseString, resolve) => {
   return res;
 };
 
-exports.load = new Promise((resolve, reject) => {
-  console.log('Calling darmstadt');
-  var options = {
-    host: 'www.staatstheater-darmstadt.de',
-    path: '/spielplan-tickets/spielplan/alles.html?no_cache=1&tx_sfspielplan_pi2[channel]=1&tx_sfspielplan_pi2[month]=&tx_sfspielplan_pi2[aenderungen]=&tx_sfspielplan_pi2[premiere]=&tx_sfspielplan_pi2[archiv]=0&tx_sfspielplan_pi2[pageid]=',
-    port: '443',
-    method: 'GET'
-  };
+exports.load = () => {
 
-  callback = function(response) {
-    var str = ''
-    response.on('data', function (chunk) {
-      str += chunk;
-    });
+  return new Promise((resolve, reject) => {
+    console.log('Calling darmstadt');
+    var options = {
+      host: 'www.staatstheater-darmstadt.de',
+      path: '/spielplan-tickets/spielplan/alles.html?no_cache=1&tx_sfspielplan_pi2[channel]=1&tx_sfspielplan_pi2[month]=&tx_sfspielplan_pi2[aenderungen]=&tx_sfspielplan_pi2[premiere]=&tx_sfspielplan_pi2[archiv]=0&tx_sfspielplan_pi2[pageid]=',
+      port: '443',
+      method: 'GET'
+    };
 
-    response.on('end', function () {
-      console.log('Received darmstadt');
-      let handled = handleResponse(str);
-      resolve(handled);
-    });
-  }
+    callback = function(response) {
+      var str = ''
+      response.on('data', function (chunk) {
+        str += chunk;
+      });
 
-  var req = https.request(options, callback);
-  req.end();
-});
+      response.on('end', function () {
+        console.log('Received darmstadt');
+        let handled = handleResponse(str);
+        resolve(handled);
+      });
+    }
+
+    var req = https.request(options, callback);
+    req.end();
+  });
+}
