@@ -1,11 +1,6 @@
 const _ = require('lodash');
 
-// var exports = {};
-
-
 let venues = ['darmstadt', 'heidelberg', 'mannheim', 'stuttgart', 'karlsruhe', 'frankfurt'];
-
-// let venues = ['frankfurt'];
 
 let venueData = {};  //
 
@@ -17,13 +12,3 @@ _.forEach(venues, (v) => {
 });
 
 exports.venueData = venueData;
-
-// exports.listVenues = () => {
-//   _.forEach(venues, (v) => {
-//     console.log(v);
-//   })
-// }
-
-
-
-// module.exports = exports;

@@ -1,4 +1,5 @@
 var express = require('express')
+const _ = require('lodash');
 
 var app = express()
 
@@ -9,16 +10,36 @@ const scraper = require('./server/scraper');
 //   console.log(res);
 // });
 
-
-app.get('*', function(req, res) {
-  // scraper.listVenues();
-
-  // scraper.venueData.heidelberg.loader.run();
-
-// console.log(scraper.venueData);
-
-
-  res.json({notes: "This is your notebook. Edit this to start saving your notes!"})
+let promises = _.map(scraper.venueData, (el) => {
+  return el.loader.load();
 })
 
-app.listen(3000)
+let allEvents;
+
+Promise.all(promises)
+.then((results) => {
+  allEvents = _.chain(results)
+    .flatten()
+    .filter((el) => {
+      // Does this have a date property?
+      return el!==undefined && el.hasOwnProperty('date');
+    })
+    .forEach((e) => {
+        e.date = new Date(e.date);
+    })
+    .orderBy('date')
+    .value();
+
+  console.log(allEvents);
+})
+.catch((e) => {
+  console.log('Promise failed: ', e);
+});
+
+
+// TODO: This part for handling requests
+// app.get('*', function(req, res) {
+//   res.json({notes: "This is your notebook. Edit this to start saving your notes!"})
+// })
+//
+// app.listen(3000)

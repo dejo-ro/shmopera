@@ -3,18 +3,18 @@ const cheerio = require('cheerio');
 const _ = require('lodash');
 
 const MONTHNAME_TO_NUMBER = {
-  'Januar': 1,
-  'Februar': 2,
-  'März': 3,
-  'April': 4,
-  'Mai': 5,
-  'Juni': 6,
-  'Juli': 7,
-  'August': 8,
-  'September': 9,
-  'Oktober': 10,
-  'November': 11,
-  'Dezember': 12
+  'Januar': '01',
+  'Februar': '02',
+  'März': '03',
+  'April': '04',
+  'Mai': '05',
+  'Juni': '06',
+  'Juli': '07',
+  'August': '08',
+  'September': '09',
+  'Oktober': '10',
+  'November': '11',
+  'Dezember': '12'
 };
 
 // This part is highly individualized for the respective venues
